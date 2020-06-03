@@ -5,58 +5,120 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-	private int Health;
-	private int goldDrop;
-	private int expDrop;
-	public Sprite[] monsterSprites;
-	public GameObject BattleGUI;
-	public Button Attack;
-	public Button Flee;
-	public Text healthDisplay;
-	public GameObject Player;
+    public int Health;
+
+    public int goldDrop;
+    public int expDrop;
+    public Sprite[] monsterSprites;
+    public GameObject BattleGUI;
+
+    public GameObject winScreen;
+    public Text goldText;
+    public Text expText;
+    public Text newLvl;
+
+    public Text healthDisplay;
+    public GameObject Player;
+    private Player PlayerStats;
+    public Text battleInfo;
+    public int naturalDmg;
+    public int upperDmg;
+    public int lowerDmg;
+
+    public Button Attack;
+    public Button Flee;
 
 
 
 
-// 
+    //
     // Start is called before the first frame update
     void Start()
     {
-    	// GetComponent<enemyGenerator>().inBattle = false;
 
-        Health = Random.Range(10,15);
-        goldDrop = Random.Range(3,8);
-        expDrop = Random.Range(1,9);
-        Attack.onClick.AddListener(AttackEnemyHealth);
-    	Flee.onClick.AddListener(ExitBattle);
-    	healthDisplay.text = "HP: " + Health;
+
+        lowerDmg = 1;
+        upperDmg = 3;
+        naturalDmg = Random.Range(lowerDmg, upperDmg);
+        PlayerStats = Player.GetComponent<Player>();
+        Health = Random.Range(10, 15);
+        goldDrop = Random.Range(3, 8);
+        expDrop = Random.Range(1, 5);
+        healthDisplay.text = "HP: " + Health;
     }
 
     // Update is called once per frame
     void Update()
     {
-    	
-        if(Health <= 0){
-        	GetComponent<enemyGenerator>().inBattle = false;
-        	BattleGUI.SetActive(false);
-        	Health = Random.Range(10,15);
-        	healthDisplay.text = "HP: " + Health;
-        	Player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+        healthDisplay.text = "HP: " + Health;
+
+        if(Health <= 0)
+        {
+            Attack.interactable = false;
+            Flee.interactable = false;
+
+            Health = Random.Range(10, 15);
+            GetComponent<enemyGenerator>().inBattle = false;
+
+           
+            PlayerStats.Exp += expDrop;
+            PlayerStats.Gold += goldDrop;
+
+            goldDrop = Random.Range(3, 8);
+            expDrop = Random.Range(1, 5);
+               
+            BattleGUI.SetActive(false);
+
+            Player.GetComponent<Rigidbody2D>().constraints &= ~RigidbodyConstraints2D.FreezePositionX;
+            Player.GetComponent<Rigidbody2D>().constraints &= ~RigidbodyConstraints2D.FreezePositionY;
+
+            battleInfo.text = "Command?";
+
+            goldText.text = "Earned " + goldDrop + " Gold";
+            expText.text = "Earned " + expDrop + " Exp";
+            // newLvl.text = "You are Lvl " + PlayerStats.Level;
+
+            StartCoroutine(DisplayRewardScreen());
+
+
+
+            Attack.interactable = true;
+            Flee.interactable = true;
+
+
+
+
+
+            for(int i = 0; i < PlayerStats.expRequired.Length; i++)
+            {
+                if(PlayerStats.Exp >= PlayerStats.expRequired[i])
+                {
+                    PlayerStats.Level = i + 1;
+                    PlayerStats.Health = PlayerStats.HealthCap = 20 + i * 5;
+                    PlayerStats.Mana = 20 + i * 5;
+                    newLvl.text = "You are Lvl " + PlayerStats.Level;
+
+                }
+
+            }
 
         }
     }
 
-    void AttackEnemyHealth(){
-    	Health-=Random.Range(1,5);
-    	healthDisplay.text = "HP: " + Health;
-    	Debug.Log(Health);
+    private IEnumerator DisplayRewardScreen()
+    {
+
+        winScreen.SetActive(true);
+
+        yield return new WaitForSeconds(4);
+
+        winScreen.SetActive(false);
+
+        Attack.interactable = true;
+        Flee.interactable = true;
+
+
+
     }
 
-    void ExitBattle(){
-    	GetComponent<enemyGenerator>().inBattle = false;
-    	BattleGUI.SetActive(false);
-    	Health = Random.Range(10,15);
-    	healthDisplay.text = "HP: " + Health;
-    	Player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
-    }
 }

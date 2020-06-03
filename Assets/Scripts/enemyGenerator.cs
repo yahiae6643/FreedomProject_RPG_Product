@@ -17,12 +17,17 @@ public class enemyGenerator : MonoBehaviour
 
     public bool inBattle;
 
+    private int start;
+    private int end;
+
     void Start()
     {
     	inBattle = false;
     	EnemyScript = GetComponent<Enemy>();
         playerSteps = Player.GetComponent<pMovement>();
         BattleGUI.SetActive(false);
+        start = 0;
+        end = 3;
     }
 
     // Update is called once per frame
@@ -30,10 +35,12 @@ public class enemyGenerator : MonoBehaviour
     {
         Debug.Log("Steps: " + playerSteps.stepsReduced);
 
+        
+
         if(playerSteps.stepsReduced > 1 && playerSteps.stepsReduced%15 == 0){
         	inBattle = true;
         	playerSteps.steps = 0;
-        	EnemyImage.sprite = EnemyScript.monsterSprites[Random.Range(0,EnemyScript.monsterSprites.Length)];
+        	EnemyImage.sprite = EnemyScript.monsterSprites[Random.Range(start,end)];
         	BattleGUI.SetActive(true);
         	Player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll; 
         } 

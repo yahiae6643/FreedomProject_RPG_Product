@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Shop
   layers:
   - Default
   - TransparentFX
@@ -44,6 +45,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 1642345407
+    locked: 0
+  - name: Shop
+    uniqueID: 2987732959
     locked: 0
   - name: Camera
     uniqueID: 2111835089
