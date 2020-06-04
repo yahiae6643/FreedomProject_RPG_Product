@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     public int upperDmg;
 
     public GameObject Enemy;
+    public GameObject dScreen;
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +47,7 @@ public class Player : MonoBehaviour
         for(int i = 0; i < expRequired.Length; i++){
         	expRequired[i] = (int) Mathf.Pow(2,i);
         }
+        dScreen.SetActive(false);
         
     }
 
@@ -54,8 +56,10 @@ public class Player : MonoBehaviour
     {
 
     	if(Health <= 0){
-    		Destroy(gameObject);
+    		// Destroy(gameObject);
+    		dScreen.SetActive(true);
     	}
+
 
 
         playerHealth.text = "HP: " + Health;

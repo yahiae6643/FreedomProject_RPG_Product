@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour
 
     public Button Attack;
     public Button Flee;
+    public string mType;
 
 
 
@@ -41,6 +42,7 @@ public class Enemy : MonoBehaviour
         upperDmg = 3;
         naturalDmg = Random.Range(lowerDmg, upperDmg);
         PlayerStats = Player.GetComponent<Player>();
+        mType = "Slime";
         Health = Random.Range(10, 15);
         goldDrop = Random.Range(3, 8);
         expDrop = Random.Range(1, 5);
@@ -57,15 +59,37 @@ public class Enemy : MonoBehaviour
             Attack.interactable = false;
             Flee.interactable = false;
 
-            Health = Random.Range(10, 15);
+            if(mType == "Slime"){
+                Health = Random.Range(10, 15);
+
+                PlayerStats.Exp += expDrop;
+                PlayerStats.Gold += goldDrop;
+
+                goldDrop = Random.Range(3, 8);
+                expDrop = Random.Range(1, 5);
+            } else if(mType == "Wolfman"){
+                Health = Random.Range(15, 20);
+
+                PlayerStats.Exp += expDrop;
+                PlayerStats.Gold += goldDrop;
+
+                goldDrop = Random.Range(8, 12);
+                expDrop = Random.Range(3, 6);
+            } else {
+                Health = Random.Range(20, 30);
+
+                PlayerStats.Exp += expDrop;
+                PlayerStats.Gold += goldDrop;
+
+                goldDrop = Random.Range(12, 24);
+                expDrop = Random.Range(6, 12);
+            }
+            
             GetComponent<enemyGenerator>().inBattle = false;
 
            
-            PlayerStats.Exp += expDrop;
-            PlayerStats.Gold += goldDrop;
 
-            goldDrop = Random.Range(3, 8);
-            expDrop = Random.Range(1, 5);
+            
                
             BattleGUI.SetActive(false);
 

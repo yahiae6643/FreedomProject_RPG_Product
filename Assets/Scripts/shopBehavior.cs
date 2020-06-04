@@ -47,6 +47,9 @@ public class shopBehavior : MonoBehaviour
     		haveWood = true;
     	} else if(haveWood){
     		Player.GetComponent<Player>().Gold+=10;
+    		Player.GetComponent<Player>().lowerDmg = 1;
+    		Player.GetComponent<Player>().upperDmg = 5;
+    		Player.GetComponent<Player>().weaponDmg = Random.Range(Player.GetComponent<Player>().lowerDmg,Player.GetComponent<Player>().upperDmg);
     		haveWood = false;
     		wT.text = "Sold!";
     	} else {
@@ -63,6 +66,9 @@ public class shopBehavior : MonoBehaviour
     		haveIron = true;
     	} else if(haveIron){
     		Player.GetComponent<Player>().Gold+=30;
+    		Player.GetComponent<Player>().lowerDmg = 1;
+    		Player.GetComponent<Player>().upperDmg = 5;
+    		Player.GetComponent<Player>().weaponDmg = Random.Range(Player.GetComponent<Player>().lowerDmg,Player.GetComponent<Player>().upperDmg);
     		haveIron = false;
     		iT.text = "Sold!";
     		
@@ -80,6 +86,9 @@ public class shopBehavior : MonoBehaviour
     		haveGrass = true;
     	} else if(haveGrass){
     		Player.GetComponent<Player>().Gold+=50;
+    		Player.GetComponent<Player>().lowerDmg = 1;
+    		Player.GetComponent<Player>().upperDmg = 5;
+    		Player.GetComponent<Player>().weaponDmg = Random.Range(Player.GetComponent<Player>().lowerDmg,Player.GetComponent<Player>().upperDmg);
     		haveGrass = false;
     		gT.text = "Sold!";
     	} else {
@@ -96,6 +105,9 @@ public class shopBehavior : MonoBehaviour
     		haveDemon = true;
     	} else if(haveDemon){
     		Player.GetComponent<Player>().Gold+=120;
+    		Player.GetComponent<Player>().lowerDmg = 1;
+    		Player.GetComponent<Player>().upperDmg = 5;
+    		Player.GetComponent<Player>().weaponDmg = Random.Range(Player.GetComponent<Player>().lowerDmg,Player.GetComponent<Player>().upperDmg);
     		haveDemon = false;
     		dT.text = "Sold!";
     	} else {

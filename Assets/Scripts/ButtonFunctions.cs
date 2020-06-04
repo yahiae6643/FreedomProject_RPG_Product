@@ -49,6 +49,8 @@ public class ButtonFunctions : MonoBehaviour
 
 
 
+
+
     void AttackEnemyHealth()
     {
         
@@ -57,7 +59,9 @@ public class ButtonFunctions : MonoBehaviour
         EnemyStats.Health -= PlayerStats.weaponDmg;
         battleInfo.text = "You Have Dealt " + PlayerStats.weaponDmg + " DMG";
         PlayerStats.weaponDmg = Random.Range(PlayerStats.lowerDmg, PlayerStats.upperDmg);
+        StartCoroutine(FlashEnemy());
 
+        
         StartCoroutine(AttackDelay(2));
 
 
@@ -89,6 +93,16 @@ public class ButtonFunctions : MonoBehaviour
         
     }
 
+    private IEnumerator FlashEnemy(){
+        Enemy.GetComponent<enemyGenerator>().EnemyImage.enabled = false;
+        yield return new WaitForSeconds(0.1F);
+        Enemy.GetComponent<enemyGenerator>().EnemyImage.enabled = true;
+        yield return new WaitForSeconds(0.1F);
+        Enemy.GetComponent<enemyGenerator>().EnemyImage.enabled = false;
+        yield return new WaitForSeconds(0.1F);
+        Enemy.GetComponent<enemyGenerator>().EnemyImage.enabled = true;
+    }
+
     private IEnumerator AttackDelay(int seconds)
     {
         yield return new WaitForSeconds(seconds);
@@ -97,6 +111,8 @@ public class ButtonFunctions : MonoBehaviour
         battleInfo.text = "Enemy Has Dealt " + EnemyStats.naturalDmg + " DMG";
 
         yield return new WaitForSeconds(2);
+
+
     }
 
 
