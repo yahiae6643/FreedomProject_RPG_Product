@@ -38,8 +38,8 @@ public class Enemy : MonoBehaviour
     {
 
 
-        lowerDmg = 1;
-        upperDmg = 3;
+        lowerDmg = 2;
+        upperDmg = 5;
         naturalDmg = Random.Range(lowerDmg, upperDmg);
         PlayerStats = Player.GetComponent<Player>();
         mType = "Slime";
@@ -59,38 +59,57 @@ public class Enemy : MonoBehaviour
             Attack.interactable = false;
             Flee.interactable = false;
 
-            if(mType == "Slime"){
+            if(mType == "Slime")
+            {
                 Health = Random.Range(10, 15);
-
-                PlayerStats.Exp += expDrop;
-                PlayerStats.Gold += goldDrop;
 
                 goldDrop = Random.Range(3, 8);
                 expDrop = Random.Range(1, 5);
-            } else if(mType == "Wolfman"){
-                Health = Random.Range(15, 20);
 
                 PlayerStats.Exp += expDrop;
                 PlayerStats.Gold += goldDrop;
+
+
+                goldText.text = "Earned " + goldDrop + " Gold";
+                expText.text = "Earned " + expDrop + " Exp";
+            }
+            else if(mType == "Wolfman")
+            {
+                Health = Random.Range(15, 20);
 
                 goldDrop = Random.Range(8, 12);
                 expDrop = Random.Range(3, 6);
-            } else {
-                Health = Random.Range(20, 30);
 
                 PlayerStats.Exp += expDrop;
                 PlayerStats.Gold += goldDrop;
 
+                goldText.text = "Earned " + goldDrop + " Gold";
+                expText.text = "Earned " + expDrop + " Exp";
+
+
+            }
+            else
+            {
+                Health = Random.Range(20, 30);
+
                 goldDrop = Random.Range(12, 24);
                 expDrop = Random.Range(6, 12);
+
+                PlayerStats.Exp += expDrop;
+                PlayerStats.Gold += goldDrop;
+
+                goldText.text = "Earned " + goldDrop + " Gold";
+                expText.text = "Earned " + expDrop + " Exp";
+
+
             }
-            
+
             GetComponent<enemyGenerator>().inBattle = false;
 
-           
 
-            
-               
+
+
+
             BattleGUI.SetActive(false);
 
             Player.GetComponent<Rigidbody2D>().constraints &= ~RigidbodyConstraints2D.FreezePositionX;
@@ -98,8 +117,7 @@ public class Enemy : MonoBehaviour
 
             battleInfo.text = "Command?";
 
-            goldText.text = "Earned " + goldDrop + " Gold";
-            expText.text = "Earned " + expDrop + " Exp";
+
             // newLvl.text = "You are Lvl " + PlayerStats.Level;
 
             StartCoroutine(DisplayRewardScreen());

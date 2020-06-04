@@ -46,7 +46,7 @@ public class enemyGenerator : MonoBehaviour
             if(Player.GetComponent<Player>().Level < 5){
                     GetComponent<Enemy>().mType = "Slime";
                     EnemyImage.sprite = EnemyScript.monsterSprites[Random.Range(0,3)];
-                    GetComponent<Enemy>().lowerDmg = 1;
+                    GetComponent<Enemy>().lowerDmg = 2;
                     GetComponent<Enemy>().upperDmg = 5;
                     GetComponent<Enemy>().naturalDmg = Random.Range(GetComponent<Enemy>().lowerDmg, GetComponent<Enemy>().upperDmg);
                     GetComponent<Enemy>().Health = Random.Range(10,15);
